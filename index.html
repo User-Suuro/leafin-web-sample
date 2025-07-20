@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP-01 Connection Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f4f4f4;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    #status {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>ESP-01 Connection Status</h1>
+  <p id="status">Loading...</p>
+
+  <script>
+    async function fetchStatus() {
+      try {
+        const response = await fetch("status.php", { cache: "no-store" });
+        const text = await response.text();
+        document.getElementById("status").textContent = text;
+      } catch (error) {
+        document.getElementById("status").textContent = "Error: Unable to fetch status.";
+      }
+    }
+
+    // Initial call and refresh every 5 seconds
+    fetchStatus();
+    setInterval(fetchStatus, 5000);
+  </script>
+</body>
+</html>
